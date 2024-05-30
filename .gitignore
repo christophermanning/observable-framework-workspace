@@ -1,0 +1,6 @@
+/dist
+Dockerfile.build
+.observablehq
+.ipynb_checkpoints
+.tmp
+*.csv

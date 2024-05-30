@@ -1,0 +1,49 @@
+services:
+  # http://127.0.0.1:8888/lab
+  jupyter:
+    # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-base-notebook
+    image: quay.io/jupyter/base-notebook
+    volumes:
+      - ./jupyter:/home/jovyan/work
+    ports:
+      - 8888:8888
+    # https://jupyter-server.readthedocs.io/en/latest/other/full-config.html
+    command: start-notebook.py --IdentityProvider.token=''
+    environment:
+      PGURL: postgresql://db:db@database/db
+
+  database:
+    image: postgres:latest
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: db
+      POSTGRES_PASSWORD: db
+      POSTGRES_DB: db
+
+  observable-framework:
+    volumes:
+      - node_modules:/app/node_modules
+      - .:/app
+    build: .
+    command: npm run dev -- --host 0.0.0.0
+    environment:
+      PGURL: postgresql://db:db@database/db
+      OBSERVABLE_TOKEN: /run/secrets/observable_token
+    secrets:
+       - observable_token
+    ports:
+      - 3000:3000
+
+volumes:
+  # persist the postgres data when the container restarts
+  pgdata:
+  # the ./node_modules directory is created in the container by `npm install` in the Dockerfile and this
+  # named volume will ensure the installed modules are saved but the directory isn't hidden by the `.:/app` bind mount above
+  node_modules:
+
+secrets:
+  observable_token:
+    file: ~/.observable_token
