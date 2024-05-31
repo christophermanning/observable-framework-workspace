@@ -225,9 +225,17 @@ const plotAvgFarePerMileGenerator = Generators.input(plotAvgFarePerMile)
   <div class="card grid-colspan-2">
     <h2>Average Fare Per Mile</h2>
     ${resize(width => plotAvgFarePerMile)}
-    <h3><small>Select a point to filter routes. Fares are bidirectionally averaged for all time periods.</small></h3>
+    <h3><small>Select a point to filter flight paths. Fares are bidirectionally averaged for all time periods.</small></h3>
   </div>
 </div>
+
+<div class="grid">
+  <div class="card">
+    Showing data for <span style="font-family:monospace">${selectedAirports.map(d=>d.code).join(', ')}</span> and ${arcs.numRows} flight ${arcs.numRows > 1 ? "paths" : "path"}.
+    <h3><small>Select an airport from the table above to filter airports and select a point on the plot above to filter flight paths.</small></h3>
+  </div>
+</div>
+
 
 <div class="grid">
   <div class="card">
@@ -329,7 +337,7 @@ resize(width => {
       reverse: true,
       rows: 30,
     })}
-    <small class="muted">Total Rows: ${routes.numRows}</small>
+    <small class="muted">Total Rows: ${routes.numRows.toLocaleString("en-US")}</small>
   </div>
 </div>
 
