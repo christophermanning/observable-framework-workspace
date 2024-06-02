@@ -26,7 +26,7 @@ up: Dockerfile.build
 
 # run commands with send-keys so the window returns to a shell when the command exits
 dev:
-	-tmux kill-session
+	-tmux kill-session -t "${NAME}"
 	tmux new-session -s "${NAME}" -d -n vi
 	tmux send-keys -t "${NAME}:vi" "vi" Enter
 	tmux new-window -t "${NAME}" -n shell "/bin/zsh"
