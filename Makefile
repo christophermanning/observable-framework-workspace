@@ -12,6 +12,11 @@ clean:
 purgecache:
 	rm -rf src/.observablehq/cache
 
+build:
+	docker-compose run ${NAME} /bin/bash --login -c "\
+		 npm run build; \
+	"
+
 deploy:
 	docker-compose run ${NAME} /bin/bash --login -c "\
 		cat /run/secrets/observable_token | { read -r OBSERVABLE_TOKEN; npm run deploy -- --build --message '`git log -1 --pretty=\%s`'; } ;\
