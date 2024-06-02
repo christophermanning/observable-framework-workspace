@@ -9,6 +9,7 @@ sql:
 # U.S. Airline Ticket Analysis
 
 ```js
+import {link} from "./util.js";
 import deck from "npm:deck.gl";
 const {DeckGL, GeoJsonLayer} = deck;
 ```
@@ -219,7 +220,11 @@ const plotAvgFarePerMileGenerator = Generators.input(plotAvgFarePerMile)
   <div class="card grid-colspan-2">
     <h2>Airports</h2>
     ${airportsInput}
-    <h3><small>Select airports to filter. 2023 top ${airports.numRows} airports by passenger count. <a href="https://data.bts.gov/Aviation/Airports/kfcv-nyy3/about_data">Airports Source</a>, <a href="https://geodata.bts.gov/datasets/usdot::t-100-domestic-market-and-segment-data/about" target="_blank">Total Passengers Source</a></small></h3>
+    <h3><small>
+        Select airports to filter. 2023 top ${airports.numRows} airports by passenger count.
+        ${link("Airports Source", "https://data.bts.gov/Aviation/Airports/kfcv-nyy3/about_data")},
+        ${link("Total Passengers Source", "https://geodata.bts.gov/datasets/usdot::t-100-domestic-market-and-segment-data/about")}
+    </small></h3>
   </div>
 
   <div class="card grid-colspan-2">
@@ -342,7 +347,9 @@ resize(width => {
 </div>
 
 <div class="note small">
-<p>The <a href="https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FHK" target="_blank">data source</a> (<a href="https://catalog.data.gov/dataset/airline-origin-and-destination-survey-ond" target="_blank">additional information</a>)
+<p>
+The ${link("data source", "https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FHK")}
+(${link("additional information", "https://catalog.data.gov/dataset/airline-origin-and-destination-survey-ond")})
 only includes a 10% sample of airline tickets and the fares are not inflation adjusted.
 <p>Modifications to the original data source include multiplying the historical passenger count by 10 to extrapolate from the 10% sample size and only averaging fares within one standard deviation of the mean to remove outliers.
 <p>This dashboard is an independent personal project and is not associated with any official entities.
