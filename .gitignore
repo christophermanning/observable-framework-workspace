@@ -4,3 +4,4 @@ Dockerfile.build
 .ipynb_checkpoints
 .tmp
 *.csv
+*.parquet
